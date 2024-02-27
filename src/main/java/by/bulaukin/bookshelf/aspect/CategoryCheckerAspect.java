@@ -41,6 +41,5 @@ public class CategoryCheckerAspect {
         }
 
         return proceed;
-
     }
 }

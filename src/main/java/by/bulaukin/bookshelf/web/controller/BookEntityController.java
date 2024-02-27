@@ -8,6 +8,7 @@ import by.bulaukin.bookshelf.web.model.request.UpsertAuthorAndBookNameRequest;
 import by.bulaukin.bookshelf.web.model.request.UpsertBooksEntityRequest;
 import by.bulaukin.bookshelf.web.model.response.BooksEntityListResponse;
 import by.bulaukin.bookshelf.web.model.response.BooksEntityResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +23,17 @@ public class BookEntityController {
     private final BooksService booksService;
 
     @GetMapping("/category")
-    public ResponseEntity<BooksEntityListResponse> findAllByCategory(@RequestBody EntityFilter filter) {
+    public ResponseEntity<BooksEntityListResponse> findAllByCategory(@RequestBody @Valid EntityFilter filter) {
         return ResponseEntity.ok(mapper.booksListToBooksEntityListResponse(booksService.getAllByCategory(filter)));
     }
 
     @GetMapping("/byAuthorAndBookName")
-    public ResponseEntity<BooksEntityResponse> getByAuthorAndName(@RequestBody UpsertAuthorAndBookNameRequest request) {
+    public ResponseEntity<BooksEntityResponse> getByAuthorAndName(@RequestBody @Valid UpsertAuthorAndBookNameRequest request) {
         return ResponseEntity.ok(mapper.bookToResponse(booksService.getByAuthorAndName(request)));
     }
 
     @PostMapping
-    public ResponseEntity<BooksEntityResponse> create(@RequestBody UpsertBooksEntityRequest request) {
+    public ResponseEntity<BooksEntityResponse> create(@RequestBody @Valid UpsertBooksEntityRequest request) {
         BooksEntity book = booksService.createBookEntity(mapper.requestToBooksEntity(request));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(mapper.bookToResponse(book));
@@ -40,7 +41,7 @@ public class BookEntityController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BooksEntityResponse> update(@PathVariable(value = "id") Long bookId,
-                                                      @RequestBody UpsertBooksEntityRequest request) {
+                                                      @RequestBody @Valid UpsertBooksEntityRequest request) {
         BooksEntity updatedBook = booksService.update(mapper.requestToBooksEntity(bookId, request));
         return ResponseEntity.ok(mapper.bookToResponse(updatedBook));
     }
