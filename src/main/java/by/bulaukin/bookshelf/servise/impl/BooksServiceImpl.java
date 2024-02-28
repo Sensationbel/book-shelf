@@ -51,6 +51,7 @@ public class BooksServiceImpl implements BooksService {
                         "createdAt",
                         "updatedAt");
         Example<BooksEntity> example = Example.of(probe, matcher);
+
         return repository.findOne(example).orElseThrow(() -> new EntityNotFoundException(MessageFormat
                 .format("Book by bookName: {0} and author: {1} not found!",
                         request.getNamedBook(),
@@ -88,6 +89,7 @@ public class BooksServiceImpl implements BooksService {
     public BooksEntity update(BooksEntity book) {
         BooksEntity updatedBook = findById(book.getId());
         BeanUtils.copyProperties(updatedBook, book);
+
         return repository.save(book);
     }
 

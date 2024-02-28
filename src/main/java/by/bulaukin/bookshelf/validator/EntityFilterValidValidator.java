@@ -13,6 +13,7 @@ public class EntityFilterValidValidator implements ConstraintValidator<RequestPa
             context
                     .buildConstraintViolationWithTemplate("Category name must be specify!!")
                     .addConstraintViolation();
+
             return false;
         }
         return true;

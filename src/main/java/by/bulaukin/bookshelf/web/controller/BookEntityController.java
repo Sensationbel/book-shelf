@@ -122,6 +122,7 @@ public class BookEntityController {
     @PostMapping
     public ResponseEntity<BooksEntityResponse> create(@RequestBody @Valid UpsertBooksEntityRequest request) {
         BooksEntity book = booksService.createBookEntity(mapper.requestToBooksEntity(request));
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(mapper.bookToResponse(book));
     }
@@ -158,6 +159,7 @@ public class BookEntityController {
     public ResponseEntity<BooksEntityResponse> update(@PathVariable(value = "id") Long bookId,
                                                       @RequestBody @Valid UpsertBooksEntityRequest request) {
         BooksEntity updatedBook = booksService.update(mapper.requestToBooksEntity(bookId, request));
+
         return ResponseEntity.ok(mapper.bookToResponse(updatedBook));
     }
 
@@ -174,6 +176,7 @@ public class BookEntityController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         booksService.deleteById(id);
+
         return ResponseEntity.noContent().build();
     }
 

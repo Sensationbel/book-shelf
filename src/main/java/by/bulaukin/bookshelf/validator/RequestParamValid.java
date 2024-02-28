@@ -14,9 +14,7 @@ import java.lang.annotation.*;
 public @interface RequestParamValid {
 
     String message() default "";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 
 }

@@ -2,10 +2,8 @@ package by.bulaukin.bookshelf.mapper;
 
 import by.bulaukin.bookshelf.aspect.CategoryChecker;
 import by.bulaukin.bookshelf.entity.BooksEntity;
-import by.bulaukin.bookshelf.servise.CategoryService;
 import by.bulaukin.bookshelf.web.model.request.UpsertBooksEntityRequest;
 import by.bulaukin.bookshelf.web.model.response.BooksEntityResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class BooksMapperDelegate implements BooksMapper {
 
@@ -19,6 +17,7 @@ public abstract class BooksMapperDelegate implements BooksMapper {
             BooksEntity booksEntity = new BooksEntity();
             booksEntity.setNamedBook(request.getNamedBook());
             booksEntity.setAuthor(request.getAuthor());
+
             return booksEntity;
         }
     }
@@ -30,8 +29,8 @@ public abstract class BooksMapperDelegate implements BooksMapper {
             return null;
         } else {
             BooksEntity booksEntity = requestToBooksEntity(request);
-
             booksEntity.setId(bookId);
+
             return booksEntity;
         }
     }
@@ -42,6 +41,7 @@ public abstract class BooksMapperDelegate implements BooksMapper {
         response.setNamedBook(booksEntity.getNamedBook());
         response.setAuthor(booksEntity.getAuthor());
         response.setCategoryName(booksEntity.getCategory().getCategoryName());
+
         return response;
     }
 }

@@ -1,7 +1,6 @@
 package by.bulaukin.bookshelf.servise.impl;
 
 import by.bulaukin.bookshelf.entity.CategoryEntity;
-import by.bulaukin.bookshelf.exceptions.EntityNotFoundException;
 import by.bulaukin.bookshelf.repository.CategoryRepository;
 import by.bulaukin.bookshelf.servise.CategoryService;
 import lombok.RequiredArgsConstructor;

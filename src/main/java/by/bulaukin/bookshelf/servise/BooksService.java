@@ -12,8 +12,6 @@ public interface BooksService {
     BooksEntity createBookEntity(BooksEntity book);
     BooksEntity getByAuthorAndName(UpsertAuthorAndBookNameRequest request);
     List<BooksEntity> getAllByCategory(EntityFilter filter);
-
     BooksEntity update(BooksEntity books);
-
     void deleteById(Long id);
 }

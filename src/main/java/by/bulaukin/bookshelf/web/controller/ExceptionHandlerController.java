@@ -22,12 +22,14 @@ public class ExceptionHandlerController {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> entityNotFound(EntityNotFoundException ex) {
         log.error(ex.getMessage());
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse(ex.getMessage()));
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ErrorResponse> badRequestParam(MissingServletRequestParameterException ex) {
+        log.error(ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(ex.getLocalizedMessage()));
@@ -35,15 +37,20 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(NumberFormatException.class)
     public ResponseEntity<ErrorResponse> numberFormatExceptionHandler(NumberFormatException ex) {
+        log.error(ex.getMessage());
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(ex.getMessage()));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> jsonParsError(HttpMessageNotReadableException ex) {
+        log.error(ex.getMessage());
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(ex.getMessage()));
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> notValid(MethodArgumentNotValidException ex) {
         log.error(ex.getMessage());
@@ -53,9 +60,9 @@ public class ExceptionHandlerController {
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .toList();
         String errorMessage = String.join(";", errorMessages);
+
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(errorMessage));
     }
-
 }

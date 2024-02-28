@@ -1,6 +1,5 @@
 package by.bulaukin.bookshelf.mapper;
 
-import by.bulaukin.bookshelf.aspect.CategoryChecker;
 import by.bulaukin.bookshelf.entity.BooksEntity;
 import by.bulaukin.bookshelf.web.model.request.UpsertBooksEntityRequest;
 import by.bulaukin.bookshelf.web.model.response.BooksEntityListResponse;
@@ -16,8 +15,6 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BooksMapper {
 
-//    @Mapping(source = "request.categoryName", target = "category.categoryName")
-
     BooksEntity requestToBooksEntity(UpsertBooksEntityRequest request);
 
     @Mapping(source = "bookId", target = "id")
@@ -31,6 +28,7 @@ public interface BooksMapper {
     default BooksEntityListResponse booksListToBooksEntityListResponse(List<BooksEntity> books) {
         BooksEntityListResponse response = new BooksEntityListResponse();
         response.setBooksList(booksListToResponseList(books));
+
         return response;
     }
 }
