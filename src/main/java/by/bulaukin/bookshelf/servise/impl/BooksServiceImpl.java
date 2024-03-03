@@ -11,6 +11,7 @@ import by.bulaukin.bookshelf.web.model.request.UpsertAuthorAndBookNameRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -28,6 +29,9 @@ import java.util.List;
 public class BooksServiceImpl implements BooksService {
 
     private final BookRepository repository;
+
+    private final CacheManager cacheManager;
+
 
     @Override
     @Cacheable(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_ID, key = "#id")
@@ -69,8 +73,7 @@ public class BooksServiceImpl implements BooksService {
             @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_CATEGORY,
                     key = "#book.category.categoryName", beforeInvocation = true),
             @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_BOOKNAME_AND_AUTHOR,
-                    key = "#book.namedBook + #book.author", beforeInvocation = true),
-            @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_ID, allEntries = true)
+                    key = "#book.namedBook + #book.author", beforeInvocation = true)
     })
     public BooksEntity createBookEntity(BooksEntity book) {
         return repository.save(book);
@@ -94,9 +97,22 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    @CacheEvict(cacheNames = AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_ID, key = "#id",
-            beforeInvocation = true)
     public void deleteById(Long id) {
+        clearCache(id);
         repository.deleteById(id);
+    }
+
+    private void clearCache(Long id) {
+        BooksEntity book = findById(id);
+
+        cacheManager
+                .getCache(AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_ID)
+                .evict(id);
+        cacheManager
+                .getCache(AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_CATEGORY)
+                .evict(book.getCategory().getCategoryName());
+        cacheManager
+                .getCache(AppCacheProperties.CacheNames.DATABASE_ENTITIES_BY_BOOKNAME_AND_AUTHOR)
+                .evict(book.getNamedBook() + book.getAuthor());
     }
 }

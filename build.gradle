@@ -38,6 +38,18 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// https://mvnrepository.com/artifact/com.redis.testcontainers/testcontainers-redis-junit-jupiter
+	testImplementation("com.redis.testcontainers:testcontainers-redis-junit-jupiter:1.4.6")
+
+// https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter
+	testImplementation("org.testcontainers:junit-jupiter:1.19.5")
+// https://mvnrepository.com/artifact/org.testcontainers/postgresql
+	testImplementation("org.testcontainers:postgresql:1.19.5")
+	// https://mvnrepository.com/artifact/com.github.tomakehurst/wiremock-jre8-standalone
+	testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:3.0.1")
+// https://mvnrepository.com/artifact/net.javacrumbs.json-unit/json-unit
+	testImplementation("net.javacrumbs.json-unit:json-unit:3.2.4")
+	testImplementation 'io.rest-assured:rest-assured'
 
 }
 

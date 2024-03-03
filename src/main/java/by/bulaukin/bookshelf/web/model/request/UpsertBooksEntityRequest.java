@@ -6,6 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @RequestParamValid
 public class UpsertBooksEntityRequest {
 

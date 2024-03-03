@@ -1,5 +1,6 @@
 package by.bulaukin.bookshelf.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,6 +15,7 @@ import java.time.Instant;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "books")
 public class BooksEntity implements Serializable {
 
     @Id
@@ -38,5 +40,6 @@ public class BooksEntity implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     @ToString.Exclude
+    @JsonIgnore
     private CategoryEntity category;
 }

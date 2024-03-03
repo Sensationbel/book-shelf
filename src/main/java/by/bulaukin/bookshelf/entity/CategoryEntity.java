@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Table(name = "categories")
 public class CategoryEntity implements Serializable {
 
     @Id
